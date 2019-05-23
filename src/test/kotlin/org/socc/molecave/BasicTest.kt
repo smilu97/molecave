@@ -4,11 +4,16 @@ import com.google.gson.JsonParser
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
 
 class BasicTest : AbstractTest() {
+
+	@Autowired
+	lateinit var moleRepo: MoleRepository
+
 	@Before
 	public override fun setUp() {
 		super.setUp()
@@ -35,6 +40,15 @@ class BasicTest : AbstractTest() {
 		assertEquals(j.get("c").asJsonArray.get(0).asInt, 1)
 		assertEquals(j.get("c").asJsonArray.get(1).asInt, 2)
 		assertEquals(j.get("c").asJsonArray.get(2).asString, "!!")
+
+	}
+
+	@Test
+	fun makeMole() {
+
+		val mole = Mole(234, "TestMole")
+
+		moleRepo.save(mole)
 
 	}
 }
